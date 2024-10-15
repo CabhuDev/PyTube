@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Descargar Canciones</title>
+
+    <!-- Vincula el archivo CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  
+</head>
+<body class="container mt-5">
+    <h1>Descarga tu canción</h1>
+    <form id="downloadForm">
+        <div class="mb-3">
+            <label for="url" class="form-label">Enlace de la canción:</label>
+            <input type="text" class="form-control" id="url" placeholder="Introduce el enlace">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="downloadSong()">Descargar</button>
+    </form>
+    <script>
+        function downloadSong() {
+            const url = document.getElementById('url').value;
+            fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ url })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => alert('Ocurrió un error: ' + error));
+        }
+    </script>
+</body>
+</html>
